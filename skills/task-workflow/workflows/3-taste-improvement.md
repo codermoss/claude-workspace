@@ -18,18 +18,10 @@ pensieve_triggers: 2 + self-improve
 - 紧急生产故障 → 直接修复，不走 Workflow
 - 新功能开发 → Workflow 1
 
-## 前置检查
-
-Workflow 启动时检测 `<project>/.pensieve/` 是否存在：
-- 不存在 → 自动执行 `pensieve init`，静默初始化项目知识库
-- 已存在 → 跳过
-
-若 `.pensieve/` 不存在且自动 init 失败，taste review 回退到全局模板（`~/.claude/skills/pensieve/.src/templates/`）。
-
 ## 数据流图
 
 ```
-用户任务（代码文件/模块）
+Step 0: Pensieve init
     ↓
 Step 1: investigation-first
     ↓ {代码状态, 问题清单[], 改进目标, 影响范围, 置信度}
@@ -51,6 +43,19 @@ Step 8: Pensieve self-improve
 ```
 
 ## 执行步骤
+
+### Step 0: 项目知识库初始化
+
+**技能**: Pensieve — 调用 `init` 工具
+
+**执行**: 检测 `<project>/.pensieve/` 是否存在：
+- 不存在 → 自动执行 `pensieve init`，播种默认 maxims/decisions/knowledge/pipelines
+- 已存在 → 跳过
+
+**质量门**: `.pensieve/` 目录存在且包含四个子目录
+**通过 →**: Step 1
+
+---
 
 ### Step 1: 调查研究
 **技能**: investigation-first
@@ -284,7 +289,7 @@ brainstorming 的 Checklist Step 9 要求 "Transition to implementation — invo
 
 ## 注意事项
 
-1. **Pensieve init**: Workflow 启动时若 `.pensieve/` 不存在则自动执行，不询问
+1. **Pensieve init**: Step 0 显式执行，确保项目知识库先行
 2. **Pensieve taste review 双重调用**: Step 2 建立"改造前"基线，Step 7 执行"改造后"回归评审——两次调用同一 pipeline（完整 6 Task），确保标准一致
 3. **Pensieve self-improve**: 1 次（verification 通过后自动执行）
 4. **karpathy-guidelines 触发频率**: 1 次（代码检查）

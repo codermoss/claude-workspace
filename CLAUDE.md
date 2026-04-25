@@ -9,7 +9,7 @@
 
 ### 行为准则
 
-- 对话开始: 每次对话开始时,主动调用 `/using-superpowers` 扫描匹配技能
+- 对话开始: 用户发送第一条消息后，MOSS 必须在第一次回复前调用 `/using-superpowers` 扫描匹配技能（无需用户确认）
 - 先读后写，理解现有代码再修改
 - 优先使用专用工具（Read/Write/Edit/rg）而非系统命令
 - 路径处理：正确处理含空格路径，使用跨平台兼容格式
@@ -20,19 +20,29 @@
 
 ### 核心工具库
 
-#### 问题诊断与架构优化
+#### 三层架构
 
-- `/task-workflow` — 生产故障、技术问题、架构决策
-  - 工作流编排器 + 质量门实现（学习 Qiushi + Pensieve 设计）
+```
+Qiushi（核心思想）
+    ↓ 指导
+Pensieve（基础设施知识库）
+    ↓ 支撑
+task-workflow（编排工具 + 质量门）
+```
+
+#### 任务工作流调度
+
+- `/task-workflow` — 任务工作流调度系统，根据任务类型路由调度三大技能库
+  - 工作流编排器 + 质量门实现（学习 Qiushi 编排 + Pensieve 质量门）
   - 包含 3 个标准工作流：
-    - `/task-workflow 1` 通用执行：新功能迭代、Bug 修复、生产故障排查（日常开发主力）
+    - `/task-workflow 1` 通用执行：新功能迭代、Bug 修复（日常开发主力）
     - `/task-workflow 2` 新项目启动：战略层，方向探索、找根据地和路线图（"往哪走、从哪切入"）
     - `/task-workflow 3` 品味提升：代码可工作但需重构/优化，Pensieve taste review 前后对比
   - 质量门：铁律（5 条）+ Step 级置信度（≥ 80%）+ Karpathy-Guidelines（代码规范，仅 W1/W3）+ 失败回退
 
 #### 规格驱动开发（可选工作流）
 
-- Spec Kit 系列 — 战术执行层（"怎么走、每一步做什么"），W2 的下一级
+- Spec Kit 系列 — 可选的规格驱动开发工作流
   - `/speckit-constitution` — 项目宪章管理
   - `/speckit-specify` — 需求规格生成
   - `/speckit-plan` — 实施计划生成
@@ -40,21 +50,35 @@
   - `/speckit-analyze` — 跨文档一致性分析
   - `/speckit-implement` — 实施执行
   - `/speckit-git-*` — Git 工作流集成
-  - 组合：`/task-workflow 2` 产出路线图后，每个功能点用 Spec Kit 执行交付（specify → plan → tasks → implement）
+  - 独立使用：需求明确时，直接用 Spec Kit（specify → plan → tasks → implement）
+  - 与 task-workflow 组合：W2 产出路线图后，每个功能点用 Spec Kit 执行交付
 
 #### 代码品味与知识管理
 
-- `/pensieve` — 独立使用的品味审查与知识管理（不依赖 task-workflow）
-  - `/pensieve review` — 代码品味审查（可独立调用或由 task-workflow 调度）
-  - `/pensieve doctor` — 查询项目架构决策、编码标准
-  - `/pensieve self-improve` — 沉淀新洞察到知识库
-  - `/pensieve init` — 初始化项目知识库
+- `/pensieve` — 项目知识库，可独立使用或与 task-workflow 集成
+  - 数据目录：`<project>/.pensieve/`
+    - `knowledge/` — IS（事实）：文件位置、模块边界、调用链缓存
+    - `decisions/` — WANT（取舍）：架构决策记录
+    - `maxims/` — MUST（硬规则）：工程准则
+    - `pipelines/` — HOW（流程）：可复用工作流
+    - `short-term/` — STAGING：待整理条目（7 天 TTL，到期提醒 refine）
+  - 基础工具：
+    - `/pensieve init` — 初始化项目知识库，播种默认模板
+    - `/pensieve doctor` — 健康检查：扫描 frontmatter、链接、目录结构、图谱一致性
+    - `/pensieve self-improve` — 沉淀可复用结论到 short-term/
+    - `/pensieve refine` — 精炼知识库：triage（五问审阅）+ compress（压缩抽象，减少条目数）
+    - `/pensieve upgrade` — 刷新 Pensieve skill 源码
+    - `/pensieve migrate` — 结构迁移与遗留清理
+  - 品味审查（6 Task Pipeline）：
+    - 独立调用：`review 这段代码`、`审查 src/auth.py`、`检查 docs/api.md 的质量`
+    - 自动触发：task-workflow W1/W3 阶段自动调用
+    - 审查范围：代码、文档、模块（任意粒度）
 
 #### 代码质量检查
 
 - `/karpathy-guidelines` — 代码完成后的质量验证
 
-### 输出格式
+## 输出格式
 
 任务完成输出：
 
@@ -110,42 +134,17 @@
 - 优先使用 MCP 专用工具而非 Bash 命令
 - 实际可用工具以系统提示注入为准
 
-## 技术栈适配
+## 技术栈概览
 
-### Python（工具语言）
+### 主力业务
+- 大模型应用开发：LLM 应用工程化（LangChain/LangGraph、RAG、Agent 编排、MCP 协议）
+- 云原生运维：K8s 应用管理 + GitOps + Argo 蓝绿发布
 
-- 用途：后端 API 开发、大模型应用开发、数据处理、自动化脚本
-- 场景：FastAPI、LangChain 应用、数据 ETL、运维工具
-- 风格：高内聚低耦合、小模块组合、类型注解、异步优先（IO 密集型）、配置分离
-- 验证指令：`pytest -v --cov` 或 `ruff check . && mypy src/`
+### 常用语言
+- Python：后端 API、大模型应用、数据处理、自动化脚本
+- Go：微服务、CLI 工具、高并发 API、系统工具
 
-### Go（工具语言）
-
-- 用途：微服务开发、CLI 工具、高并发 API、系统工具
-- 场景：gRPC 服务、K8s Operator、性能敏感组件
-- 风格：小包设计、接口优先、显式错误处理、并发安全
-- 验证指令：`go test -race -cover ./...` 或 `golangci-lint run`
-
-### 大模型应用开发（主力业务）
-
-- 定位：LLM 应用工程化，不涉及模型训练和底层算法
-- 场景：RAG 系统、Agent 编排、API 服务、工具调用、多模态应用
-- 技术栈：LangChain/LlamaIndex、LangGraph、Faiss/ChromaDB/Qdrant、MCP 协议
-- 风格：工程化优先、Prompt Caching 必须启用、异步并发、错误重试机制
-- 成本控制：Prompt Caching 启用率 > 80%、批处理优先、向量检索 Top-K ≤ 10、简单任务用 Haiku
-- 验证指令：`pytest tests/ai/ -v --cov`
-
-### 云原生运维（主力业务）
-
-- 定位：K8s 应用管理 + GitOps + 应用生命周期 + Argo 蓝绿发布
-- 场景：应用部署、版本管理、蓝绿发布、配置管理、故障排查
-- 技术栈：K8s/Helm、Argo CD/Argo Rollouts、GitLab CI、EFK + Prometheus/Grafana
-- 风格：GitOps 优先、蓝绿发布（Argo Rollouts）、资源 limits 必须设置、日志结构化
-- 验证指令：`helm template` 或 `kubectl apply --dry-run=server`
-
-### 数据库（基础设施）
-
-- 场景：数据持久化、查询优化、缓存设计
-- 技术栈：PostgreSQL/MySQL（主库）、Redis（缓存/队列）
-- 风格：索引优先、连接池配置、事务隔离级别明确、慢查询监控
-- 验证指令：`psql -c "EXPLAIN ANALYZE <query>"` 或 `redis-cli INFO stats`
+### 基础设施
+- 数据库：PostgreSQL/MySQL（主库）、Redis（缓存/队列）
+- 容器编排：K8s/Helm、Argo CD/Argo Rollouts
+- 监控日志：EFK + Prometheus/Grafana

@@ -19,12 +19,6 @@ pensieve_triggers: 1 + self-improve
 - 代码品味提升 → Workflow 3
 - 琐碎单步任务（格式化、查函数签名、简单问答）→ 不走 Workflow，直接执行
 
-## 前置检查
-
-Workflow 启动时检测 `<project>/.pensieve/` 是否存在：
-- 不存在 → 自动执行 `pensieve init`，静默初始化项目知识库
-- 已存在 → 跳过
-
 ## 设计原则
 
 本 Workflow 是完整认知流水线，10 步全部必须执行。不设条件跳过——进入 Workflow 的任务本身就值得完整思考。
@@ -38,7 +32,7 @@ practice-cognition（Step 5）是认知哲学层，TDD 和 systematic-debugging 
 ## 数据流图
 
 ```
-前置: Pensieve init（.pensieve/ 不存在时静默执行）
+Step 0: Pensieve init
     ↓
 Step 1: investigation-first
     ↓ {问题/需求, 约束, 边界条件, 关键发现, 置信度}
@@ -67,6 +61,19 @@ Step 10: Pensieve self-improve
 ```
 
 ## 执行步骤
+
+### Step 0: 项目知识库初始化
+
+**技能**: Pensieve — 调用 `init` 工具
+
+**执行**: 检测 `<project>/.pensieve/` 是否存在：
+- 不存在 → 自动执行 `pensieve init`，播种默认 maxims/decisions/knowledge/pipelines
+- 已存在 → 跳过
+
+**质量门**: `.pensieve/` 目录存在且包含 `maxims/`、`decisions/`、`knowledge/`、`pipelines/` 四个子目录
+**通过 →**: Step 1
+
+---
 
 ### Step 1: 调查研究
 
@@ -401,7 +408,7 @@ TDD/systematic-debugging 负责：具体代码编写和验证
 
 ## 注意事项
 
-1. **Pensieve init**: Workflow 启动时若 `.pensieve/` 不存在则自动执行，不询问
+1. **Pensieve init**: Step 0 显式执行，确保项目知识库先行
 2. **Pensieve taste review**: 1 次，完整 6 Task Pipeline，不做裁剪
 3. **Pensieve self-improve**: 1 次，verification 通过后自动执行
 4. **karpathy-guidelines**: 1 次，代码产出后必须执行
