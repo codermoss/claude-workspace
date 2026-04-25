@@ -243,7 +243,7 @@ else:
 
 ---
 
-## karpathy-guidelines 质量门
+## karpathy-guidelines（代码层质量门）
 
 ### 调用时机
 

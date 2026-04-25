@@ -135,28 +135,10 @@ else:
 
 ---
 
-## 五、4 个原则的检查逻辑
+## 五、Step 6 检查的原则（仅原则 2+3）
 
-### 原则 1: Think Before Coding
-
-**检查时机**：计划阶段（writing-plans 之后）
-
-**检查项**：
-- ✅ 假设是否显性声明
-- ✅ 多种方案是否列出
-- ✅ 不确定性是否标注
-- ✅ 成功标准是否可验证
-
-**输出格式**：
-
-```markdown
-[原则1检查]
-- 假设显性化: ✅ 已声明 3 个关键假设
-- 方案对比: ⚠️ 仅提供单一方案，建议补充备选方案
-- 成功标准: ✅ 可验证（通过单元测试）
-```
-
----
+> 原则 1（Think Before Coding）由 brainstorming/writing-plans Step 检查。
+> 原则 4（Goal-Driven Execution）由 verification-before-completion Step 检查。
 
 ### 原则 2: Simplicity First
 
@@ -204,27 +186,6 @@ else:
 
 ---
 
-### 原则 4: Goal-Driven Execution
-
-**检查时机**：计划阶段 + 验证阶段
-
-**检查项**：
-- ✅ 成功标准是否可验证
-- ✅ 是否有验证命令
-- ✅ 多步任务是否有计划
-- ✅ 每步是否有检查点
-
-**输出格式**：
-
-```markdown
-[原则4检查]
-- 成功标准: ✅ "pytest test_auth.py -v"
-- 验证命令: ✅ 已提供
-- 执行计划: ✅ 3 步计划，每步有检查点
-```
-
----
-
 ## 六、失败回退机制
 
 ### 场景 1：规范检查不通过 + 置信度 >= 80%
@@ -255,9 +216,9 @@ else:
 
 | 维度 | karpathy-guidelines | Pensieve taste review | Pensieve self-improve |
 |------|---------------------|----------------------|----------------------|
-| 调用方式 | task-workflow 在代码变更阶段调用 | task-workflow 条件触发（变更 > 100行/新模块/数据结构重构） | task-workflow verification 后自动触发 |
+| 调用方式 | task-workflow 在代码变更阶段调用 | task-workflow 无条件触发（W1 1次, W2 1次, W3 2次） | task-workflow verification 后自动触发 |
 | 检查粒度 | 函数/模块 | 系统/架构/接口品味 | 认知/模式/决策 |
-| 执行频率 | 每次代码变更 | 0-2 次/Workflow | 0-1 次/Workflow |
+| 执行频率 | 每次代码变更（仅 W1/W3） | W1:1次, W2:1次, W3:2次 | 每 Workflow 1次 |
 | 失败后果 | 修正代码 | 返回重新实现 | 无（沉淀即完成） |
 
 ### 执行顺序

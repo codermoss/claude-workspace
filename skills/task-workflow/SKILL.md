@@ -15,7 +15,7 @@ Task-Workflow 学习两大技能库的设计模式：
 | 学习对象 | 学习内容 | 体现位置 |
 |---------|---------|---------|
 | Qiushi (workflows) | 工作流编排：任务顺序、数据传递格式、终止条件 | 3 个 Workflow 定义（Step 序列、输入输出字段、质量门） |
-| Pensieve (Pipeline) | 质量门实现：验证逻辑、失败回退、置信度阈值 | Karpathy-Guidelines 集成（4 个原则、信号判断规则、失败回退） |
+| Pensieve (Pipeline) | 质量门实现：四层体系（铁律 + Step置信度 + Karpathy-Guidelines + 失败回退） | 执行规范、Karpathy-Guidelines 集成 |
 
 **核心职责**：
 - **编排层**：定义 Step 顺序、数据传递格式、质量门标准（学习 Qiushi）
