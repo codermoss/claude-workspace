@@ -25,9 +25,9 @@
 - `/task-workflow` — 生产故障、技术问题、架构决策
   - 工作流编排器 + 质量门实现（学习 Qiushi + Pensieve 设计）
   - 包含 3 个标准工作流：
-    - W1 通用执行：新功能迭代、Bug 修复、生产故障排查（日常开发主力）
-    - W2 新项目启动：战略层，方向探索、找根据地和路线图（"往哪走、从哪切入"）
-    - W3 品味提升：代码可工作但需重构/优化，Pensieve taste review 前后对比
+    - `/task-workflow 1` 通用执行：新功能迭代、Bug 修复、生产故障排查（日常开发主力）
+    - `/task-workflow 2` 新项目启动：战略层，方向探索、找根据地和路线图（"往哪走、从哪切入"）
+    - `/task-workflow 3` 品味提升：代码可工作但需重构/优化，Pensieve taste review 前后对比
   - 集成 Karpathy-Guidelines 作为代码质量门
 
 #### 规格驱动开发（可选工作流）
@@ -40,7 +40,7 @@
   - `/speckit-analyze` — 跨文档一致性分析
   - `/speckit-implement` — 实施执行
   - `/speckit-git-*` — Git 工作流集成
-  - 组合：W2 产出路线图后，每个功能点用 Spec Kit 执行交付（specify → plan → tasks → implement）
+  - 组合：`/task-workflow 2` 产出路线图后，每个功能点用 Spec Kit 执行交付（specify → plan → tasks → implement）
 
 #### 代码品味与知识管理
 
