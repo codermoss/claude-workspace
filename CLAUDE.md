@@ -25,11 +25,12 @@
 - `/task-workflow` — 生产故障、技术问题、架构决策
   - 工作流编排器 + 质量门实现（学习 Qiushi + Pensieve 设计）
   - 包含 3 个标准工作流（通用执行、新项目启动、品味提升）
+  - W2 新项目启动 = 战略层：方向探索、找根据地和路线图（"往哪走、从哪切入"）
   - 集成 Karpathy-Guidelines 作为代码质量门
 
 #### 规格驱动开发（可选工作流）
 
-- Spec Kit 系列 — GitHub 官方规格驱动开发工具集（与 task-workflow 平级）
+- Spec Kit 系列 — 战术执行层（"怎么走、每一步做什么"），W2 的下一级
   - `/speckit-constitution` — 项目宪章管理
   - `/speckit-specify` — 需求规格生成
   - `/speckit-plan` — 实施计划生成
@@ -37,6 +38,7 @@
   - `/speckit-analyze` — 跨文档一致性分析
   - `/speckit-implement` — 实施执行
   - `/speckit-git-*` — Git 工作流集成
+  - 组合：W2 产出路线图后，每个功能点用 Spec Kit 执行交付（specify → plan → tasks → implement）
 
 #### 代码品味与知识管理
 
