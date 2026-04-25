@@ -44,10 +44,11 @@
 
 #### 代码品味与知识管理
 
-- `/pensieve` — 项目知识库、架构决策、编码标准、代码品味提升
-  - 查询已有决策：`/pensieve doctor`
-  - 捕获新洞察：`/pensieve self-improve`
-  - 品味审查：`/pensieve review`（可独立调用或由 task-workflow 调度）
+- `/pensieve` — 独立使用的品味审查与知识管理（不依赖 task-workflow）
+  - `/pensieve review` — 代码品味审查（可独立调用或由 task-workflow 调度）
+  - `/pensieve doctor` — 查询项目架构决策、编码标准
+  - `/pensieve self-improve` — 沉淀新洞察到知识库
+  - `/pensieve init` — 初始化项目知识库
 
 #### 代码质量检查
 
