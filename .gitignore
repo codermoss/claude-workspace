@@ -1,0 +1,35 @@
+# Claude Code 运行时文件
+.history/
+agents/
+backup/
+backups/
+cache/
+cc-aicodemirror-statusline-plus/
+commands/
+config.json
+downloads/
+file-history/
+history.jsonl
+paste-cache/
+plugins/
+sessions/
+settings.json
+settings.local.json
+shell-snapshots/
+stats-cache.json
+statsig/
+tasks/
+telemetry/
+todos/
+
+# 项目记忆（包含敏感信息）
+projects/
+
+# 自定义样式（已废弃）
+styles/
+
+# 保留文件
+!CLAUDE.md
+!output-styles/
+!skills/
+!README.md
