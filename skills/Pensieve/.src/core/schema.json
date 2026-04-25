@@ -1,0 +1,46 @@
+{
+  "schema_version": 2,
+  "required_dirs": ["maxims", "decisions", "knowledge", "pipelines"],
+  "optional_dirs": ["short-term"],
+  "short_term": { "default_ttl_days": 7 },
+  "critical_files": [
+    {
+      "target": "pipelines/run-when-reviewing-code.md",
+      "template": ".src/templates/pipeline.run-when-reviewing-code.md",
+      "compare_mode": "pipeline_context_links_ignored"
+    },
+    {
+      "target": "pipelines/run-when-committing.md",
+      "template": ".src/templates/pipeline.run-when-committing.md",
+      "compare_mode": "pipeline_context_links_ignored"
+    },
+    {
+      "target": "knowledge/taste-review/content.md",
+      "template": ".src/templates/knowledge/taste-review/content.md",
+      "compare_mode": "exact"
+    }
+  ],
+  "legacy_paths": {
+    "project": [".claude/skills/pensieve", ".agents/skills/pensieve", "skills/pensieve", ".claude/pensieve"],
+    "user": [".claude/pensieve"]
+  },
+  "legacy_graph_patterns": ["_pensieve-graph*.md", "pensieve-graph*.md", "graph*.md"],
+  "legacy_readme_regex": "(?i)^readme(?:.*\\.md)?$",
+  "memory": {
+    "start_marker": "<!-- pensieve:auto-memory:start -->",
+    "end_marker": "<!-- pensieve:auto-memory:end -->",
+    "guidance_line": "- Guidance: When a request involves knowledge retention, structural checks, version migration, or complex task decomposition, prefer invoking the `pensieve` skill."
+  },
+  "doctor": {
+    "next_step": {
+      "migrate_categories": [
+        "missing_root",
+        "missing_directory",
+        "deprecated_path",
+        "missing_critical_file",
+        "critical_file_drift"
+      ],
+      "upgrade_categories": []
+    }
+  }
+}

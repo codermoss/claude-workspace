@@ -28,6 +28,9 @@ projects/
 # 自定义样式（已废弃）
 styles/
 
+# 系统文件
+.DS_Store
+
 # 保留文件
 !CLAUDE.md
 !output-styles/
