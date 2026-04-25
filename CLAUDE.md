@@ -28,7 +28,7 @@
     - `/task-workflow 1` 通用执行：新功能迭代、Bug 修复、生产故障排查（日常开发主力）
     - `/task-workflow 2` 新项目启动：战略层，方向探索、找根据地和路线图（"往哪走、从哪切入"）
     - `/task-workflow 3` 品味提升：代码可工作但需重构/优化，Pensieve taste review 前后对比
-  - 集成 Karpathy-Guidelines 作为代码质量门
+  - 质量门：铁律（5 条）+ Step 级置信度（≥ 80%）+ Karpathy-Guidelines（代码规范，仅 W1/W3）+ 失败回退
 
 #### 规格驱动开发（可选工作流）
 
