@@ -36,3 +36,6 @@ styles/
 !output-styles/
 !skills/
 !README.md
+
+# Local skills symlinks (managed by cc-switch)
+skills/
