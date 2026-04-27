@@ -1,0 +1,13 @@
+.DS_Store
+/temp
+.backup
+push-to-github.sh
+/resource
+/.obsidian
+
+# Python
+__pycache__/
+
+# Development artifacts
+/.src/.gitignore
+/agents/.gitignore
