@@ -64,13 +64,28 @@ Step 10: Pensieve self-improve
 
 ### Step 0: 项目知识库初始化
 
-**技能**: Pensieve — 调用 `init` 工具
+**技能**: Pensieve — 调用 `init` + `doctor` 工具
 
-**执行**: 检测 `<project>/.pensieve/` 是否存在：
-- 不存在 → 自动执行 `pensieve init`，播种默认 maxims/decisions/knowledge/pipelines
-- 已存在 → 跳过
+**执行**: 
+1. 直接调用 Pensieve init
+   - Pensieve init 自己判断是否需要初始化
+   - Pensieve init 保证幂等性（可重复调用）
 
-**质量门**: `.pensieve/` 目录存在且包含 `maxims/`、`decisions/`、`knowledge/`、`pipelines/` 四个子目录
+2. 执行 doctor 健康检查
+   - 确保 .pensieve/ 结构正确
+   - 检查 frontmatter、链接、目录结构
+   - 验证种子文件完整性
+
+**执行命令**:
+```bash
+# 初始化
+bash "${PENSIEVE_SKILL_ROOT:-$HOME/.claude/skills/pensieve}/.src/scripts/init-project-data.sh"
+
+# 健康检查
+bash "${PENSIEVE_SKILL_ROOT:-$HOME/.claude/skills/pensieve}/.src/scripts/run-doctor.sh" --strict
+```
+
+**质量门**: Pensieve init 执行完成，doctor 检查通过（无 MUST_FIX）
 **通过 →**: Step 1
 
 ---
