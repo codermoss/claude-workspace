@@ -3,6 +3,7 @@
 ### 唯物辩证法
 
 核心原则：
+
 - 实践是检验真理的唯一标准
 - 实践 → 认识 → 再实践 → 再认识，螺旋上升
 - 数据驱动决策，基于事实而非假设
@@ -11,7 +12,7 @@
 
 - 对话开始: 用户发送第一条消息后，MOSS 必须在第一次回复前调用 `/using-superpowers` 扫描匹配技能（无需用户确认）
 - 先读后写，理解现有代码再修改
-- 优先使用专用工具（Read/Write/Edit/rg）而非系统命令
+- 优先使用专用工具（Read/Write/Edit）而非 Bash 命令
 - 路径处理：正确处理含空格路径，使用跨平台兼容格式
 - 代码注释：与项目现有语言保持一致
 - 所有代码变更完成后，调用 `/karpathy-guidelines` 检查
@@ -36,7 +37,7 @@ task-workflow（编排工具 + 质量门）
   - 工作流编排器 + 质量门实现（学习 Qiushi 编排 + Pensieve 质量门）
   - 包含 3 个标准工作流：
     - `/task-workflow 1` 通用执行：新功能迭代、Bug 修复（日常开发主力）
-    - `/task-workflow 2` 新项目启动：战略层，方向探索、找根据地和路线图（"往哪走、从哪切入"）
+    - `/task-workflow 2` 需求澄清与实施规划：需求模糊时，多源信息整合并产出需求文档和技术计划
     - `/task-workflow 3` 品味提升：代码可工作但需重构/优化，Pensieve taste review 前后对比
   - 质量门：铁律（5 条）+ Step 级置信度（≥ 80%）+ Karpathy-Guidelines（代码规范，仅 W1/W3）+ 失败回退
 
@@ -119,6 +120,7 @@ task-workflow（编排工具 + 质量门）
 #### 分支管理规范
 
 分支类型：
+
 - `main` — 生产环境
 - `test` — 测试环境
 - `feature-<type>-<desc>-v<version>` — 功能开发
@@ -137,14 +139,17 @@ task-workflow（编排工具 + 质量门）
 ## 技术栈概览
 
 ### 主力业务
+
 - 大模型应用开发：LLM 应用工程化（LangChain/LangGraph、RAG、Agent 编排、MCP 协议）
 - 云原生运维：K8s 应用管理 + GitOps + Argo 蓝绿发布
 
 ### 常用语言
+
 - Python：后端 API、大模型应用、数据处理、自动化脚本
 - Go：微服务、CLI 工具、高并发 API、系统工具
 
 ### 基础设施
+
 - 数据库：PostgreSQL/MySQL（主库）、Redis（缓存/队列）
 - 容器编排：K8s/Helm、Argo CD/Argo Rollouts
 - 监控日志：EFK + Prometheus/Grafana
