@@ -31,6 +31,10 @@ styles/
 # 系统文件
 .DS_Store
 
+# 备份与清理临时文件
+*.backup-*
+.last-cleanup
+
 # 保留文件
 !CLAUDE.md
 !output-styles/
